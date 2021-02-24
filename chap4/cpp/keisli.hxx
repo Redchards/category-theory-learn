@@ -5,6 +5,7 @@
 #include <cctype>
 #include <concepts>
 #include <cstring>
+#include <iostream>
 #include <iterator>
 #include <string>
 #include <utility>
@@ -29,6 +30,13 @@ auto identity(T x)
 -> Writer<T>
 {
     return { x, {} };
+}
+
+template<class T>
+std::ostream& operator<<(std::ostream& os, const Writer<T>& writer)
+{
+    os << "(" << writer.first << ", " << writer.second << ")";
+    return os;
 }
 
 auto to_upper(const std::string& s)
@@ -133,16 +141,18 @@ std::string mappend<std::string>(const std::string& lhs, const std::string& rhs)
 
 namespace monoid
 {
-    auto compose(auto m2, auto m1)
+    
+auto compose(auto m2, auto m1)
+{
+    return [m1, m2](auto x)
     {
-        return [m1, m2](auto x)
-        {
-            auto p1 = m1(x);
-            auto p2 = m2(p1.first);
+        auto p1 = m1(x);
+        auto p2 = m2(p1.first);
 
-            return std::make_pair(p2.first, mappend(p1.second, p2.second));
-        };
-    }
+        return std::make_pair(p2.first, mappend(p1.second, p2.second));
+    };
+}
+
 }
 
 auto process(const std::string& s)
@@ -155,6 +165,28 @@ auto process2(const std::string& s)
 -> Writer<std::vector<std::string>>
 {
     return monoid::compose(split_words, to_lower)(s);
+}
+
+template<class T>
+concept Integral = std::is_integral_v<T>;
+
+template<Integral T>
+auto is_even(T x)
+-> Writer<bool>
+{
+    return { (x & 1) == 0, "[Is even]" };
+}
+
+auto negate(bool x)
+-> Writer<bool>
+{
+    return { !x, "[Not]" };
+}
+
+template<Integral T>
+auto is_odd(T x)
+{
+    return monoid::compose(negate, is_even<T>)(x);
 }
 
 #endif // KEISLI_HXX

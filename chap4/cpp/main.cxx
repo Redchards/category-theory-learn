@@ -28,5 +28,12 @@ int main()
     std::cout << "Logging..." << std::endl;
     std::cout << p.second << std::endl;
 
+    std::cout << std::boolalpha;
+
+    std::cout << is_even(4) << std::endl;
+    std::cout << is_even(5) << std::endl;
+    std::cout << is_odd(4) << std::endl;
+    std::cout << is_odd(5) << std::endl;
+
     return 0;
 }
