@@ -10,13 +10,16 @@ template<class T>
 T mempty = not_defined(mempty<T>);
 
 template<class T>
-T mappend(const T&, const T&) = delete;
+struct mappend
+{
+    static T apply(const T&, const T&) = delete;
+};
 
 template<class M>
 concept Monoid = requires(M m)
 {
     mempty<M>;
-    mappend(m, m);
+    mappend<M>::apply(m, m);
 };
 
 #endif // MONOID_HXX

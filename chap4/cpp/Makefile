@@ -53,7 +53,7 @@ $(OBJDIR)/%.d: $(SRCDIR)/%$(EXT)
 
 # Building rule for .o files and its .cxx in combination with all .hxx
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CXX) $(CXXFLAGS) /I $(INCLDIR) /o $@ /c $<
+	$(CXX) $(CXXFLAGS) /I $(INCLDIR) /o $@ /c $< /EHs
 
 ######################### Cleaning rules ###########################
 # Cleans complete project

@@ -134,10 +134,13 @@ template<>
 std::string mempty<std::string>{};
 
 template<>
-std::string mappend<std::string>(const std::string& lhs, const std::string& rhs)
+struct mappend<std::string>
 {
-    return lhs + rhs;
-}
+    static std::string apply(const std::string& lhs, const std::string& rhs)
+    {
+        return lhs + rhs;
+    }
+};
 
 namespace monoid
 {
@@ -149,7 +152,7 @@ auto compose(auto m2, auto m1)
         auto p1 = m1(x);
         auto p2 = m2(p1.first);
 
-        return std::make_pair(p2.first, mappend(p1.second, p2.second));
+        return std::make_pair(p2.first, mappend<decltype(p1.second)>::apply(p1.second, p2.second));
     };
 }
 
