@@ -5,3 +5,5 @@
 .vscode
 .stack-work/
 *~
+obj*
+**/stack.yaml.lock
