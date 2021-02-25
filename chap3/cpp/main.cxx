@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <iostream>
 #include <string>
 
 // Helper
@@ -54,5 +55,7 @@ int8_t mappend<int8_t>(int8_t lhs, int8_t rhs)
 
 int main()
 {
+    std::cout << "Nothing here..." << std::endl;
+
     return 0;
 }

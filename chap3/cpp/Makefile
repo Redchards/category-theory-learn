@@ -17,7 +17,7 @@ DPSFLAGS = /clang:-MMD
 LDFLAGS = 
 
 # Makefile settings
-APPNAME = chap4.exe
+APPNAME = chap3.exe
 EXT = .cxx
 SRCDIR = .
 OBJDIR = obj
