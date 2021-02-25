@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-#include "monoid.hxx"
+#include <monoid.hxx>
 
 namespace ranges
 {

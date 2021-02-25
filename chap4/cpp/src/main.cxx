@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "keisli.hxx"
+#include <keisli.hxx>
 
 int main()
 {

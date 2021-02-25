@@ -19,14 +19,14 @@ LDFLAGS =
 # Makefile settings
 APPNAME = chap4.exe
 EXT = .cxx
-SRCDIR = .
+SRCDIR = src
+INCLDIR = include
 OBJDIR = obj
 
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 DEP = $(OBJ:$(OBJDIR)/%.o=$(OBJDIR)/%.d)
 
-# UNIX-based OS variables & settings
 RM = rm
 DELOBJ = $(OBJ)
 
@@ -46,14 +46,14 @@ $(APPNAME): $(OBJ)
 
 # Creates the dependency rules
 $(OBJDIR)/%.d: $(SRCDIR)/%$(EXT)
-	$(CXX) $(CXXFLAGS) /clang:-MM /clang:"-MT $(@:$(OBJDIR)/%.d=$(OBJDIR)/%.o)" $< > $@
+	$(CXX) $(CXXFLAGS) /I $(INCLDIR) /clang:-MM /clang:"-MT $(@:$(OBJDIR)/%.d=$(OBJDIR)/%.o)" $< > $@
 
-# Includes all .h files
+# Includes all .hxx files
 -include $(DEP)
 
-# Building rule for .o files and its .c/.cpp in combination with all .h
+# Building rule for .o files and its .cxx in combination with all .hxx
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CXX) $(CXXFLAGS) /o $@ /c $<
+	$(CXX) $(CXXFLAGS) /I $(INCLDIR) /o $@ /c $<
 
 ######################### Cleaning rules ###########################
 # Cleans complete project
